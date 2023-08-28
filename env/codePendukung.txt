@@ -1,0 +1,77 @@
+############UNTUK di WEB Refresh#############
+
+function postEvery10Seconds() {
+  const dataToSend = {
+    peristiwa: "udin",
+    negara: "string",
+    keterangan: "",
+    aktual: "",
+    prakiraan: "",
+    sebelumnya: "",
+    dampak: ""
+  };
+
+  const url = 'http://192.168.100.22:8000/udin';
+
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(dataToSend)
+  };
+
+  setInterval(() => {
+    fetch(url, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        console.log('Respon dari server:', data);
+      })
+      .catch(error => {
+        console.error('Terjadi kesalahan:', error);
+      });
+  }, 10000); // Mengulangi setiap 10 detik
+}
+
+// Memulai pengiriman POST setiap 10 detik
+postEvery10Seconds();
+
+
+
+########### ISI untuk di refresh webnya #################
+{
+  peristiwa: "udin",
+  negara: "string",
+  keterangan: "",
+  aktual: "",
+  prakiraan:"",
+  sebelumnya:"",
+  dampak:""
+}
+
+
+###########untuk di spreadsheadnya#############
+
+function gg(){
+const url = "http://127.0.0.1:8000/udin"
+
+const res = UrlFetchApp.fetch(url)
+
+const dataT = res.getContentText()
+
+const data = JSON.parse(dataT)
+
+const result = data.map(p => {
+return [p["hari"],p["peristiwa"],p["negara"],p["keterangan"],p["aktual"],p["prakiraan"],p["sebelumnya"],p["dampak"]] })
+
+return result
+}
+
+#############refres page###########
+https://chrome.google.com/webstore/detail/easy-auto-refresh/aabcgdmkeabbnleenpncegpcngjpnjkc/related
+
+###########script inject #############
+https://chrome.google.com/webstore/detail/code-injector/edkcmfocepnifkbnbkmlcmegedeikdeb/related
+
+###########untuk menjalankan servernya#############
+uvicorn main:app  --reload --host 0.0.0.0 --port 8000
