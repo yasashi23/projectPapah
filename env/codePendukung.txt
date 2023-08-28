@@ -1,40 +1,31 @@
 ############UNTUK di WEB Refresh#############
 
-function postEvery10Seconds() {
-  const dataToSend = {
-    peristiwa: "udin",
-    negara: "string",
-    keterangan: "",
-    aktual: "",
-    prakiraan: "",
-    sebelumnya: "",
-    dampak: ""
-  };
+function ggku() {
+  const url = "https://da5c-114-124-208-58.ngrok-free.app/";
 
-  const url = 'http://192.168.100.22:8000/udin';
-
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(dataToSend)
-  };
-
-  setInterval(() => {
-    fetch(url, requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        console.log('Respon dari server:', data);
-      })
-      .catch(error => {
-        console.error('Terjadi kesalahan:', error);
-      });
-  }, 10000); // Mengulangi setiap 10 detik
+  try {
+    const options = {
+      method: 'GET',  // Ganti dengan metode yang sesuai
+      headers: {
+        'ngrok-skip-browser-warning': 'true'
+      }
+    };
+    
+    const res = UrlFetchApp.fetch(url, options);
+    
+    const dataT = res.getContentText();
+    const data = JSON.parse(dataT);
+    
+    const result = data.map(p => {
+      return [p["hari"], p["peristiwa"], p["negara"], p["keterangan"], p["aktual"], p["prakiraan"], p["sebelumnya"], p["dampak"]];
+    });
+    
+    Logger.log(url);
+    return result;
+  } catch (err) {
+    console.error(err);
+  }
 }
-
-// Memulai pengiriman POST setiap 10 detik
-postEvery10Seconds();
 
 
 
