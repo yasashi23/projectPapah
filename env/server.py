@@ -77,13 +77,18 @@ def runProg():
     else:
         print(f"angkanya sama {dataHarga}")
 
-runProg()
+# runProg()
 
     
 
     
+def hajar():
+    while True:
+        print("Refreshing...")
+        runProg()
+        time.sleep(0.2)
 
-
+hajar()
 
 
     
