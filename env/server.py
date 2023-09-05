@@ -90,5 +90,7 @@ def hajar():
 
 hajar()
 
+# https://www.tradingview.com/symbols/XAUUSD/
+
 
     
